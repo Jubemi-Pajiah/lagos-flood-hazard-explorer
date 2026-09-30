@@ -1,0 +1,36 @@
+{
+  "factors": [
+    "elevation",
+    "twi",
+    "distance_to_rivers",
+    "flow_accumulation",
+    "runoff",
+    "slope",
+    "rainfall",
+    "landcover"
+  ],
+  "weights": {
+    "elevation": 0.2,
+    "twi": 0.18,
+    "distance_to_rivers": 0.15,
+    "flow_accumulation": 0.12,
+    "runoff": 0.12,
+    "slope": 0.1,
+    "rainfall": 0.08,
+    "landcover": 0.05
+  },
+  "eigenvector": {
+    "elevation": 0.2005598978451524,
+    "twi": 0.18093112089468236,
+    "distance_to_rivers": 0.15636985410441853,
+    "flow_accumulation": 0.12654245060608263,
+    "runoff": 0.11307695273272197,
+    "slope": 0.09481051977464867,
+    "rainfall": 0.07317203914881647,
+    "landcover": 0.05453716489347699
+  },
+  "lambda_max": 8.286071317176901,
+  "ci": 0.040867331025271625,
+  "ri": 1.41,
+  "cr": 0.0289839227129586
+}

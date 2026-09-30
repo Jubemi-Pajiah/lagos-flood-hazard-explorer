@@ -1,0 +1,43 @@
+{
+  "overall_accuracy": 0.53,
+  "kappa": 0.412,
+  "holdout_pixels": 15000,
+  "confusion_matrix": [
+    [
+      1483,
+      420,
+      356,
+      443,
+      298
+    ],
+    [
+      491,
+      1486,
+      321,
+      475,
+      227
+    ],
+    [
+      297,
+      229,
+      1630,
+      535,
+      309
+    ],
+    [
+      509,
+      318,
+      455,
+      1539,
+      179
+    ],
+    [
+      392,
+      246,
+      316,
+      239,
+      1807
+    ]
+  ],
+  "note": "from the original run's accuracy report, rounded to 3 decimals"
+}

@@ -1,0 +1,8 @@
+{
+  "hotspots": 20,
+  "in_high_or_very_high": 6,
+  "in_moderate": 13,
+  "in_moderate_or_above": 19,
+  "share_high_or_very_high": 0.3,
+  "share_moderate_or_above": 0.95
+}
