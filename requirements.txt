@@ -1,0 +1,8 @@
+# App-only install (for example on Streamlit Community Cloud).
+# The app reads precomputed files; the full pipeline needs environment.yml instead.
+numpy>=1.24
+pandas>=2.0
+pyproj>=3.5
+shapely>=2.0
+matplotlib>=3.7
+streamlit>=1.30

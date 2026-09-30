@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lagos-flood-explorer"
+version = "0.1.0"
+description = "Flood hazard and population exposure model for Lagos: AHP hazard index, WorldPop exposure by LGA, and rainfall scenarios."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Jubemi Pajiah", email = "info@jubemi.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "rasterio>=1.3",
+    "geopandas>=0.14",
+    "shapely>=2.0",
+    "pyproj>=3.5",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.3",
+    "matplotlib>=3.7",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+app = ["streamlit>=1.30"]
+dev = ["pytest>=7.4", "ruff>=0.5", "pre-commit>=3.5"]
+
+[project.scripts]
+flood = "flood.cli:main"
+
+[tool.setuptools]
+packages = ["flood"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "NPY"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "golden: regression tests against the saved golden outputs (need FLOOD_DATA_DIR and FLOOD_GOLDEN_DIR)",
+    "slow: tests that take more than a minute",
+]

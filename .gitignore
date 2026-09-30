@@ -1,0 +1,39 @@
+# generated outputs (app/data is committed on purpose)
+outputs/
+*.aux.xml
+
+# raw data never lives in the repo; it is read from FLOOD_DATA_DIR
+geo-data/
+ready_for_preprocessing/
+*.jp2
+*.tif
+*.tiff
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# environments
+.venv/
+venv/
+env/
+.env
+
+# notebooks and editors
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# OS and tool junk
+[Dd]esktop.ini
+Thumbs.db
+.DS_Store
+*.log
+*.tmp
+*.lock
+~$*

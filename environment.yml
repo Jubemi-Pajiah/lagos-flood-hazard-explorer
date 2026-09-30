@@ -1,0 +1,23 @@
+name: flood
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scipy
+  - rasterio
+  - geopandas
+  - shapely
+  - pyproj
+  - pyyaml
+  - scikit-learn
+  - matplotlib
+  - openpyxl
+  - streamlit
+  - pytest
+  - ruff
+  - pre-commit
+  - pip
+  - pip:
+      - -e .
