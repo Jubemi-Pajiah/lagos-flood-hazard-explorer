@@ -1,0 +1,176 @@
+# Region settings for Lagos State, Nigeria.
+#
+# Paths under `data:` are relative to FLOOD_DATA_DIR (the raw data folder). Paths under
+# `validation:`, `scenarios:` and `app:` are relative to the repository root.
+# See docs/adding-a-region.md for what each entry does.
+
+name: lagos
+title: Lagos State, Nigeria
+
+crs: EPSG:32631                     # UTM zone 31N, metres
+
+grid:                               # analysis grid shared by every hazard factor
+  resolution: 30
+  bounds: [467520, 704640, 649110, 741390]   # xmin, ymin, xmax, ymax; omit to fit the boundary
+landcover_grid:                     # Sentinel-2 grid for the land cover classifier
+  resolution: 10
+  bounds: [467520, 704650, 649110, 741370]
+
+data:
+  boundary:                         # region outline (GADM level 1; not redistributable)
+    path: ready_for_preprocessing/admin_boundaries/NGA_adm1.shp
+    where: {NAME_1: Lagos}
+  admin_units:                      # units for the exposure table (GADM level 2)
+    path: ready_for_preprocessing/admin_boundaries/NGA_adm2.shp
+    where: {NAME_1: Lagos}
+    name_field: NAME_2
+    label: LGA
+    rename:                         # source spelling -> name used in outputs (geoBoundaries)
+      Badagary: Badagry
+      Eti-Osa: Eti Osa
+      Ibeju/Lekki: Ibeju Lekki
+      LagosIsland: Lagos Island
+      Mainland: Lagos Mainland
+  dem_tiles:                        # SRTM 1 arc-second
+    - ready_for_preprocessing/dem/n06_e002_1arc_v3.tif
+    - ready_for_preprocessing/dem/n06_e003_1arc_v3.tif
+    - ready_for_preprocessing/dem/n06_e004_1arc_v3.tif
+  rivers: ready_for_preprocessing/hydro_rivers/HydroRIVERS_v10_af.shp
+  rainfall_monthly:                 # CHIRPS v2.0 monthly, Africa
+    pattern: ready_for_preprocessing/rainfall_chirps/{month_name}-{year}.tif
+    years: [2020, 2021]
+    months: [3, 4, 5, 6, 7, 8, 9, 10, 11]
+    nodata: -9999
+    fill_gaps: true                 # CHIRPS has no values over the sea and lagoons; fill
+                                    # boundary cells from the nearest CHIRPS cell
+  soil_clay:                        # SoilGrids clay content, 0-5 cm, g/kg
+    path: ready_for_preprocessing/soil_grids/clay_0-5cm_mean.tif
+    nodata: 0
+  sentinel2:                        # Sentinel-2 L2A 10 m bands, 2026-04-19
+    B02:
+      - ready_for_preprocessing/sentinel2_bands/T31NDH_B02_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NEH_B02_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NFH_B02_10m.jp2
+    B03:
+      - ready_for_preprocessing/sentinel2_bands/T31NDH_B03_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NEH_B03_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NFH_B03_10m.jp2
+    B04:
+      - ready_for_preprocessing/sentinel2_bands/T31NDH_B04_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NEH_B04_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NFH_B04_10m.jp2
+    B08:
+      - ready_for_preprocessing/sentinel2_bands/T31NDH_B08_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NEH_B08_10m.jp2
+      - ready_for_preprocessing/sentinel2_bands/T31NFH_B08_10m.jp2
+  worldcover_tiles:                 # ESA WorldCover 2021 v200, used as training labels
+    - ready_for_preprocessing/WORLDCOVER/ESA_WORLDCOVER_10M_2021_V200/MAP/ESA_WorldCover_10m_2021_v200_N06E000_Map/ESA_WorldCover_10m_2021_v200_N06E000_Map.tif
+    - ready_for_preprocessing/WORLDCOVER/ESA_WORLDCOVER_10M_2021_V200/MAP/ESA_WorldCover_10m_2021_v200_N06E003_Map/ESA_WorldCover_10m_2021_v200_N06E003_Map.tif
+  population: ready_for_preprocessing/population/NGA_population_v1_2_gridded.tif
+  station: ready_for_preprocessing/nimet/NIMET_Lagos_raw.xlsx   # used only if climate.station.enabled
+
+terrain:
+  accumulation_threshold: 1000      # r.watershed minimum basin size, cells
+
+climate:
+  extreme_percentile: 95            # per-cell percentile of the monthly values
+  station:
+    enabled: false                  # station data terms not yet confirmed
+    name: Ikeja
+    sheets:
+      rain_rate: RAINRATE           # mean daily rain rate per month, mm/day
+      temperature: AVERAGE TEMP
+      relative_humidity: RELATIVE HUMIDITY
+    return_periods: [2, 5, 10, 25, 50, 100]
+
+landcover:
+  classes: {1: Urban, 2: Vegetation, 3: Water, 4: Wetland and mangrove, 5: Bare soil}
+  water_class: 3
+  training_labels:                  # WorldCover code -> class
+    10: 2                           # tree cover
+    20: 2                           # shrubland
+    30: 2                           # grassland
+    40: 2                           # cropland
+    50: 1                           # built-up
+    60: 5                           # bare or sparse vegetation
+    80: 3                           # permanent water
+    90: 4                           # herbaceous wetland
+    95: 4                           # mangroves
+  samples_per_class: 10000
+  train_fraction: 0.7               # 7,000 training and 3,000 holdout pixels per class
+  random_seed: 42
+  random_forest: {n_estimators: 500, min_samples_leaf: 5, class_weight: balanced}
+  save_probability: false
+
+runoff:
+  rainfall: rainfall_total_2021     # climate product used as P (a seasonal total)
+  clay_to_percent: 0.1              # g/kg to %
+  hsg_clay_breaks: [10, 20, 40]     # % clay limits between soil groups A|B|C|D
+  hsg_where_missing: 1              # soil group for cells SoilGrids leaves empty (urban, water):
+                                    # 1 = A, as in the original model; 0 = no runoff there
+  initial_abstraction_ratio: 0.2
+  default_curve_number: 75
+  curve_numbers:                    # land cover class: [A, B, C, D], USDA TR-55 based
+    1: [77, 85, 90, 92]             # urban
+    2: [55, 70, 77, 83]             # vegetation
+    3: [98, 98, 98, 98]             # water
+    4: [75, 82, 87, 89]             # wetland and mangrove
+    5: [72, 81, 88, 91]             # bare soil
+  sensitivity:
+    cn_changes_pct: [-20, -10, 0, 10, 20]
+    cn_min: 30
+    cn_max: 98
+
+hazard:
+  normalisation: {lower_percentile: 2, upper_percentile: 98}
+  # Order matters: it is the row and column order of pairwise_matrix.
+  # direction: benefit = higher value means more hazard; cost = lower value means more hazard.
+  factors:
+    - {name: elevation, label: Elevation, source: preprocess/dem.tif, direction: cost, weight: 0.20}
+    - {name: twi, label: Topographic wetness index, source: terrain/twi.tif, direction: benefit, weight: 0.18}
+    - {name: distance_to_rivers, label: Distance to rivers, source: terrain/distance_to_rivers.tif, direction: cost, weight: 0.15}
+    - {name: flow_accumulation, label: Flow accumulation (log), source: terrain/flow_accumulation.tif, direction: benefit, transform: log1p, weight: 0.12}
+    - {name: runoff, label: SCS-CN runoff depth, source: runoff/runoff_depth.tif, direction: benefit, weight: 0.12}
+    - {name: slope, label: Slope, source: terrain/slope.tif, direction: cost, weight: 0.10}
+    - {name: rainfall, label: 95th percentile monthly rainfall, source: climate/rainfall_p95_monthly.tif, direction: benefit, weight: 0.08}
+    - name: landcover
+      label: Land cover
+      source: landcover/landcover.tif
+      builder: class_scores
+      normalise: false
+      direction: benefit
+      weight: 0.05
+      scores: {1: 0.90, 2: 0.30, 3: 0.10, 4: 0.70, 5: 0.75}
+  # Saaty 1-9 judgements, upper triangle (row i lists a_ii .. a_in). Checked against the
+  # weights on every run; the weights above are what the model uses.
+  pairwise_matrix:
+    - [1, 1, 1, 3, 2, 2, 3, 2]
+    - [1, 1, 1, 2, 2, 2, 5]
+    - [1, 1, 1, 2, 3, 2]
+    - [1, 1, 1, 2, 3]
+    - [1, 1, 2, 2]
+    - [1, 1, 2]
+    - [1, 2]
+    - [1]
+  zones:
+    breaks: [0.0, 0.20, 0.40, 0.60, 0.80, 1.01]
+    names: [Very Low, Low, Moderate, High, Very High]
+    high: [4, 5]                    # zones counted as "High or Very High"
+
+validation:
+  hotspots: data/lagos/hotspots.csv
+
+scenarios:
+  rainfall_scales: [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.5]
+  return_periods: []                # e.g. [2, 5, 10, 25, 50, 100]; needs station statistics
+  rainfall_factors: [rainfall]      # factors whose values scale with rainfall
+  runoff_factor: runoff             # factor recomputed with SCS-CN from scaled rainfall
+  downsample: 4                     # app grid cell = 4 x 30 m = 120 m
+  app_data_dir: app/data/lagos
+
+app:
+  admin_units: data/lagos/lga_boundaries.geojson   # geoBoundaries (GRID3), CC BY 4.0
+  admin_units_source: {iso: NGA, level: ADM2}       # used by `python -m flood fetch-boundaries`
+  admin_name_field: shapeName
+  admin_name_map: {}                # geoBoundaries name -> exposure table name
+  zone_colors: ["#1a9850", "#a6d96a", "#fee08b", "#f46d43", "#a50026"]
