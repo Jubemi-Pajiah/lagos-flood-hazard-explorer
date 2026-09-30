@@ -1,5 +1,9 @@
 # Lagos Flood Hazard Explorer
 
+[![ci](https://github.com/jubemi-pajiah/lagos-flood-hazard-explorer/actions/workflows/ci.yml/badge.svg)](https://github.com/jubemi-pajiah/lagos-flood-hazard-explorer/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+
 A flood hazard and population exposure model for Lagos State, Nigeria, with a small
 Streamlit app. The model combines eight terrain, rainfall, runoff and land cover factors
 into an AHP hazard index at 30 m, counts the people living in each hazard zone by Local
@@ -81,6 +85,13 @@ ratio of 0.029. Zones break at 0.2, 0.4, 0.6 and 0.8. Runoff uses the SCS curve 
 method on the 2021 rainy-season CHIRPS total; population is WorldPop / GRID3 bottom-up
 estimates. Details in [docs/methods.md](docs/methods.md).
 
+![The eight hazard factors after normalisation](docs/images/hazard_factors.png)
+
+Land cover comes from a Random Forest on Sentinel-2 imagery (19 April 2026), trained on
+ESA WorldCover labels:
+
+![Land cover classes](docs/images/landcover.png)
+
 ## Results
 
 | Zone | Area (km2) | of which water (km2) | Residents |
@@ -105,6 +116,8 @@ estimates. Details in [docs/methods.md](docs/methods.md).
   rainfall) to 3,091,064 (1.3 times) and 3,647,862 (1.5 times).
 
 ![Exposure by LGA](docs/images/exposure_by_lga.png)
+
+![People in High or Very High zones under rainfall scenarios](docs/images/scenario_exposure.png)
 
 ## Limitations
 
