@@ -134,10 +134,10 @@ def run(region: Region) -> None:
 
     for sc in scenarios:
         index, zones = model.zones(sc["rainfall_scale"])
-        small, coarse_grid = downsample(zones, region.grid, factor, "mode")
+        small, coarse_grid = downsample(zones, region.grid, factor, "nearest")
         np.savez_compressed(out / f"zones_{sc['id']}.npz", zones=small)
         if sc["id"] == "rain_x1.00":
-            small_index, _ = downsample(index, region.grid, factor, "average")
+            small_index, _ = downsample(index, region.grid, factor, "nearest")
             np.savez_compressed(out / "hazard_index.npz", index=small_index.astype("float32"))
 
         cell_km2 = region.grid.cell_area_m2 / 1e6

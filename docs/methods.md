@@ -86,7 +86,8 @@ Rainfall is multiplied by 0.8, 0.9, 1.0, 1.1, 1.2, 1.3 and 1.5. The rainfall fac
 scaled directly and runoff is recomputed from the scaled rainfall; the other six factors
 are unchanged. Normalisation uses the baseline percentile bounds so that wetter scenarios
 score higher. For each scenario the zones and exposure tables are recomputed at 30 m and
-the zones are stored at 120 m (most common zone in each 4 x 4 block) for the app.
+the zones and the baseline index are stored at 120 m for the app, both taken from the
+centre cell of each 4 x 4 block so a point query's zone always matches its index.
 
 ## Station climate (optional)
 
