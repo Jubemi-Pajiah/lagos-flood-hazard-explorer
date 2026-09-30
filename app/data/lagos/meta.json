@@ -1,0 +1,102 @@
+{
+  "region": "Lagos State, Nigeria",
+  "crs": "EPSG:32631",
+  "transform": [
+    120.0,
+    0.0,
+    467520.0,
+    0.0,
+    -120.0,
+    741390.0
+  ],
+  "shape": [
+    307,
+    1514
+  ],
+  "downsample_factor": 4,
+  "cell_size_m": 120.0,
+  "zones": {
+    "1": {
+      "name": "Very Low",
+      "color": "#1a9850"
+    },
+    "2": {
+      "name": "Low",
+      "color": "#a6d96a"
+    },
+    "3": {
+      "name": "Moderate",
+      "color": "#fee08b"
+    },
+    "4": {
+      "name": "High",
+      "color": "#f46d43"
+    },
+    "5": {
+      "name": "Very High",
+      "color": "#a50026"
+    }
+  },
+  "high_zones": [
+    4,
+    5
+  ],
+  "weights": {
+    "elevation": 0.2,
+    "twi": 0.18,
+    "distance_to_rivers": 0.15,
+    "flow_accumulation": 0.12,
+    "runoff": 0.12,
+    "slope": 0.1,
+    "rainfall": 0.08,
+    "landcover": 0.05
+  },
+  "admin_label": "LGA",
+  "admin_name_field": "shapeName",
+  "admin_name_map": {},
+  "baseline": "rain_x1.00",
+  "scenarios": [
+    {
+      "id": "rain_x0.80",
+      "label": "Rainfall x0.80",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 0.8
+    },
+    {
+      "id": "rain_x0.90",
+      "label": "Rainfall x0.90",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 0.9
+    },
+    {
+      "id": "rain_x1.00",
+      "label": "Baseline",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 1.0
+    },
+    {
+      "id": "rain_x1.10",
+      "label": "Rainfall x1.10",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 1.1
+    },
+    {
+      "id": "rain_x1.20",
+      "label": "Rainfall x1.20",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 1.2
+    },
+    {
+      "id": "rain_x1.30",
+      "label": "Rainfall x1.30",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 1.3
+    },
+    {
+      "id": "rain_x1.50",
+      "label": "Rainfall x1.50",
+      "kind": "rainfall_scale",
+      "rainfall_scale": 1.5
+    }
+  ]
+}

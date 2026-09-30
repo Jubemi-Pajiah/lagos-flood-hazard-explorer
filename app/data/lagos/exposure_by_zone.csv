@@ -1,0 +1,36 @@
+zone,name,population,pct_total,area_km2,scenario
+1,Very Low,344601,3.34,62.4,rain_x0.80
+2,Low,5553601,53.84,1406.2,rain_x0.80
+3,Moderate,3862237,37.44,1418.7,rain_x0.80
+4,High,549772,5.33,850.4,rain_x0.80
+5,Very High,5047,0.05,28.0,rain_x0.80
+1,Very Low,118642,1.15,21.6,rain_x0.90
+2,Low,4524169,43.86,999.9,rain_x0.90
+3,Moderate,4868926,47.2,1735.4,rain_x0.90
+4,High,778776,7.55,866.1,rain_x0.90
+5,Very High,24745,0.24,142.8,rain_x0.90
+1,Very Low,18975,0.18,3.4,rain_x1.00
+2,Low,3250964,31.52,636.1,rain_x1.00
+3,Moderate,5831148,56.53,1954.7,rain_x1.00
+4,High,1139718,11.05,808.2,rain_x1.00
+5,Very High,74453,0.72,363.3,rain_x1.00
+1,Very Low,1347,0.01,0.3,rain_x1.10
+2,Low,2204872,21.37,382.6,rain_x1.10
+3,Moderate,6358763,61.64,1999.0,rain_x1.10
+4,High,1601863,15.53,843.7,rain_x1.10
+5,Very High,148413,1.44,540.2,rain_x1.10
+1,Very Low,26,0.0,0.0,rain_x1.20
+2,Low,1376890,13.35,225.9,rain_x1.20
+3,Moderate,6524386,63.25,1932.9,rain_x1.20
+4,High,2167171,21.01,987.5,rain_x1.20
+5,Very High,246785,2.39,619.5,rain_x1.20
+1,Very Low,0,0.0,0.0,rain_x1.30
+2,Low,752066,7.29,140.9,rain_x1.30
+3,Moderate,6472128,62.74,1862.4,rain_x1.30
+4,High,2755260,26.71,1104.6,rain_x1.30
+5,Very High,335804,3.26,657.9,rain_x1.30
+1,Very Low,0,0.0,0.0,rain_x1.50
+2,Low,454553,4.41,97.6,rain_x1.50
+3,Moderate,6212843,60.23,1776.8,rain_x1.50
+4,High,3231154,31.32,1201.5,rain_x1.50
+5,Very High,416708,4.04,689.9,rain_x1.50
