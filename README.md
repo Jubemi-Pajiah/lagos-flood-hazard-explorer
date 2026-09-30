@@ -12,7 +12,8 @@ region file, so the same code can be run for other places.
 
 ![Flood hazard zones, Lagos State](docs/images/hazard_zones.png)
 
-Live demo: *link to follow*
+**Live demo: [lagos-flood-hazard-explorer.onrender.com](https://lagos-flood-hazard-explorer.onrender.com)**
+(hosted on a free plan; the first load after a quiet spell can take up to a minute)
 
 ## What it does
 
@@ -25,6 +26,20 @@ Live demo: *link to follow*
 * Precomputes seven rainfall scenarios (0.8 to 1.5 times the baseline).
 * Serves a hazard map, point query, exposure tables and scenarios in a Streamlit app that
   reads only small precomputed files.
+
+## The app
+
+Four tabs: the hazard map, a point query (zone, index and LGA for any coordinate),
+exposure by LGA, and rainfall scenarios. It reads only precomputed files, so it runs in
+about 200 MB of memory.
+
+![Hazard map tab](docs/images/app/app_hazard_map.png)
+
+![Exposure by LGA tab](docs/images/app/app_exposure_by_lga.png)
+
+| Rainfall x0.80 | Rainfall x1.30 |
+|---|---|
+| ![Drier scenario](docs/images/app/app_scenario_drier.png) | ![Wetter scenario](docs/images/app/app_scenario_wetter.png) |
 
 ## Quick start
 
@@ -56,6 +71,10 @@ Run the app (needs only `requirements.txt`, not the raw data):
 pip install -r requirements.txt
 streamlit run app/app.py
 ```
+
+To host it (for example on Render), use `pip install -r requirements.txt` as the build
+command and `streamlit run app/app.py --server.port $PORT --server.address 0.0.0.0
+--server.headless true` as the start command.
 
 ## Architecture
 
@@ -137,8 +156,9 @@ ESA WorldCover labels:
   test, not a forecast.
 * Population is from WorldPop / GRID3 v1.2, released in 2020. LGA totals (10,338,873)
   are 23,615 higher than the mapped total because some edge cells have no hazard value.
-* The deployed app shows zones and the hazard index at 120 m. Per-factor values are not
-  included in point queries, to keep the app small.
+* The deployed app shows zones and the hazard index at 120 m, taken from the centre
+  30 m cell of each block. Per-factor values are not included in point queries, to keep
+  the app small.
 
 More in [docs/limitations.md](docs/limitations.md), including corrections made to an
 earlier version of this analysis.
